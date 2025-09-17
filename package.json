@@ -1,0 +1,23 @@
+{
+  "name": "shopminhbeo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/banglegen/shopminhbeo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/banglegen/shopminhbeo/issues"
+  },
+  "homepage": "https://github.com/banglegen/shopminhbeo#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
