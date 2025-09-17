@@ -1,123 +1,126 @@
-/* Reset cơ bản */
-* {
+body {
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
-/* Header */
 header {
-  background-color: #ff1500;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #ff6600;
   color: white;
-  padding: 20px;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  padding: 15px;
 }
 
-/* Container form */
 .container {
+  width: 90%;
   max-width: 600px;
-  margin: 20px auto;
-  background: #fff;
-  padding: 20px;
+  margin-top: 80px; 
+  background: white;
+  padding: 25px;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+
+  text-align: center;
 }
 
 h2 {
-  margin-bottom: 15px;
-}
-
-/* Order summary */
-.order-summary {
   margin-bottom: 20px;
+  color: #333;
 }
 
-#order-list {
+.order-summary {
+  background: #fafafa;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: left; 
+}
+
+.order-summary ul {
   list-style: none;
-  margin-bottom: 10px;
+  padding: 0;
 }
 
-#order-list li {
+.order-summary li {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 5px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid #eee;
+  margin: 8px 0;
 }
 
-#order-total {
-  font-weight: bold;
-  color: #ff1500;
+form {
+  text-align: left;
 }
 
-/* Form */
 form label {
   display: block;
-  margin-top: 10px;
-  margin-bottom: 5px;
-}
-
-form input, form textarea, form select {
-  width: 100%;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  margin-bottom: 5px;
-}
-
-form button {
   margin-top: 15px;
+  font-weight: bold;
+  color: #444;
+}
+
+form input, 
+form textarea, 
+form select {
   width: 100%;
   padding: 10px;
-  background-color: #ff1500;
-  color: white;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background: #ff6600;
   border: none;
   border-radius: 6px;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
 }
 
-form button:hover {
-  background-color: #ff1100;
+button:hover {
+  background: #cc5200;
 }
 
-/* Toast thông báo */
 #toast {
   visibility: hidden;
   min-width: 250px;
-  margin-left: -125px;
   background-color: #333;
-  color: white;
+  color: #fff;
   text-align: center;
-  border-radius: 6px;
-  padding: 12px;
+  border-radius: 8px;
+  padding: 15px;
   position: fixed;
   z-index: 1000;
   left: 50%;
   bottom: 30px;
+  transform: translateX(-50%);
   font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.5s, bottom 0.5s;
 }
 
 #toast.show {
   visibility: visible;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
-@keyframes fadein {
-  from { bottom: 0; opacity: 0; } 
-  to { bottom: 30px; opacity: 1; }
-}
-
-@keyframes fadeout {
-  from { bottom: 30px; opacity: 1; }
-  to { bottom: 0; opacity: 0; }
-}
-
-/* Responsive */
-@media (max-width: 500px) {
-  .container {
-    margin: 10px;
-    padding: 15px;
-  }
+  opacity: 1;
+  bottom: 50px;
 }
