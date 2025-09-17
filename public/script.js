@@ -1,5 +1,6 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+
 function addToCart(name, price) {
   let item = cart.find(p => p.name === name);
   if (item) {
@@ -10,6 +11,7 @@ function addToCart(name, price) {
   saveCart();
   updateCartUI();
 }
+
 
 function increaseQuantity(name) {
   let item = cart.find(p => p.name === name);
@@ -35,6 +37,7 @@ function removeItem(name) {
   saveCart();
   updateCartUI();
 }
+
 
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
@@ -71,5 +74,32 @@ function updateCartUI() {
   }
 }
 
-// chạy khi load trang
+
+if (document.getElementById("order-btn")) {
+  document.getElementById("order-btn").addEventListener("click", () => {
+    if (cart.length === 0) {
+      alert("Giỏ hàng trống!");
+      return;
+    }
+
+    fetch("/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(cart)
+    })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message);
+        cart = [];
+        saveCart();
+        updateCartUI();
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Có lỗi khi gửi đơn hàng!");
+      });
+  });
+}
+
+
 updateCartUI();
