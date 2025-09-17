@@ -8,7 +8,7 @@
 
 /* Header */
 header {
-  background-color: #ff6f61;
+  background-color: #ff1500;
   color: white;
   padding: 20px;
   text-align: center;
@@ -56,7 +56,7 @@ header {
 }
 
 .product button {
-  background-color: #ff6f61;
+  background-color: #fb1500;
   border: none;
   color: white;
   padding: 8px 12px;
@@ -66,7 +66,7 @@ header {
 }
 
 .product button:hover {
-  background-color: #e55a4f;
+  background-color: #ff1100;
 }
 
 /* Giỏ hàng */
@@ -89,7 +89,7 @@ header {
 
 .cart-controls button {
   margin-left: 5px;
-  background: #ff6f61;
+  background: #ff1500;
   border: none;
   color: white;
   padding: 3px 6px;
@@ -98,19 +98,19 @@ header {
 }
 
 .cart-controls button:hover {
-  background: #e55a4f;
+  background: #ff1100;
 }
 
 #cart-total {
   font-weight: bold;
-  color: #ff6f61;
+  color: #fe1500;
 }
 
 #order-btn {
   margin-top: 10px;
   width: 100%;
   padding: 10px;
-  background-color: #ff6f61;
+  background-color: #fe1500;
   color: white;
   border: none;
   border-radius: 6px;
@@ -118,7 +118,7 @@ header {
 }
 
 #order-btn:hover {
-  background-color: #e55a4f;
+  background-color: #d61002;
 }
 
 /* Responsive */

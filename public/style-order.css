@@ -8,7 +8,7 @@
 
 /* Header */
 header {
-  background-color: #ff6f61;
+  background-color: #ff1500;
   color: white;
   padding: 20px;
   text-align: center;
@@ -49,7 +49,7 @@ h2 {
 
 #order-total {
   font-weight: bold;
-  color: #ff6f61;
+  color: #ff1500;
 }
 
 /* Form */
@@ -71,7 +71,7 @@ form button {
   margin-top: 15px;
   width: 100%;
   padding: 10px;
-  background-color: #ff6f61;
+  background-color: #ff1500;
   color: white;
   border: none;
   border-radius: 6px;
@@ -79,7 +79,7 @@ form button {
 }
 
 form button:hover {
-  background-color: #e55a4f;
+  background-color: #ff1100;
 }
 
 /* Toast thông báo */
