@@ -1,16 +1,10 @@
-// server.js
 const express = require("express");
 const path = require("path");
-
 const app = express();
-const PORT = 3000; // có thể đổi thành 5000 hoặc 8080
-
-// phục vụ file tĩnh (HTML, CSS, JS, ảnh...)
-app.use(express.static(path.join(__dirname)));
-
-// route mặc định
+const PORT = 3000;
+app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.listen(PORT, () => {
