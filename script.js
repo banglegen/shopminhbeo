@@ -1,63 +1,138 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Hiển thị giỏ hàng trong trang đặt hàng
-  let orderList = document.getElementById("order-list");
-  let orderTotal = document.getElementById("order-total");
+// ---------------- GIỎ HÀNG ----------------
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+function addToCart(name, price) {
+  let item = cart.find(p => p.name === name);
+  if (item) {
+    item.quantity++;
+  } else {
+    cart.push({ name, price, quantity: 1 });
+  }
+  saveCart();
+  updateCartUI();
+}
+
+function increaseQuantity(name) {
+  let item = cart.find(p => p.name === name);
+  if (item) item.quantity++;
+  saveCart();
+  updateCartUI();
+}
+
+function decreaseQuantity(name) {
+  let item = cart.find(p => p.name === name);
+  if (item) {
+    item.quantity--;
+    if (item.quantity <= 0) {
+      cart = cart.filter(p => p.name !== name);
+    }
+  }
+  saveCart();
+  updateCartUI();
+}
+
+function removeItem(name) {
+  cart = cart.filter(p => p.name !== name);
+  saveCart();
+  updateCartUI();
+}
+
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function updateCartUI() {
+  let cartCount = cart.reduce((sum, p) => sum + p.quantity, 0);
   let total = cart.reduce((sum, p) => sum + p.price * p.quantity, 0);
 
-  cart.forEach(item => {
-    let li = document.createElement("li");
-    li.textContent = `${item.name} - ${item.price.toLocaleString()}đ x ${item.quantity}`;
-    orderList.appendChild(li);
-  });
-  orderTotal.textContent = total.toLocaleString();
+  if (document.getElementById("cart-count")) {
+    document.getElementById("cart-count").textContent = cartCount;
+  }
 
-  // Xử lý form đặt hàng
-  document.getElementById("order-form").addEventListener("submit", function (e) {
-    e.preventDefault();
+  if (document.getElementById("cart-list")) {
+    let cartList = document.getElementById("cart-list");
+    cartList.innerHTML = "";
+    cart.forEach(item => {
+      let li = document.createElement("li");
+      li.classList.add("cart-item");
+      li.innerHTML = `
+        <span>${item.name} - ${item.price.toLocaleString()}đ x ${item.quantity}</span>
+        <div class="cart-controls">
+          <button onclick="decreaseQuantity('${item.name}')">➖</button>
+          <button onclick="increaseQuantity('${item.name}')">➕</button>
+          <button onclick="removeItem('${item.name}')">❌</button>
+        </div>
+      `;
+      cartList.appendChild(li);
+    });
+  }
 
-    let name = document.getElementById("customer-name").value.trim();
-    let phone = document.getElementById("customer-phone").value.trim();
-    let address = document.getElementById("customer-address").value.trim();
-    let payment = document.getElementById("customer-payment").value;
+  if (document.getElementById("cart-total")) {
+    document.getElementById("cart-total").textContent = total.toLocaleString();
+  }
+}
 
-    if (!name || !phone || !address) {
-      showToast("❌ Vui lòng nhập đầy đủ thông tin!");
-      return;
-    }
+// ---------------- ĐẶT HÀNG ----------------
+document.addEventListener("DOMContentLoaded", () => {
+  if (document.getElementById("order-form")) {
+    let orderList = document.getElementById("order-list");
+    let orderTotal = document.getElementById("order-total");
 
-    // Tạo đối tượng đơn hàng
-    let order = {
-      id: Date.now(), // ID duy nhất
-      customer: { name, phone, address, payment },
-      items: cart,
-      total,
-      date: new Date().toLocaleString()
-    };
+    let total = cart.reduce((sum, p) => sum + p.price * p.quantity, 0);
 
-    // Lấy danh sách đơn hàng cũ từ localStorage
-    let orders = JSON.parse(localStorage.getItem("orders")) || [];
-    orders.push(order);
+    cart.forEach(item => {
+      let li = document.createElement("li");
+      li.textContent = `${item.name} - ${item.price.toLocaleString()}đ x ${item.quantity}`;
+      orderList.appendChild(li);
+    });
+    orderTotal.textContent = total.toLocaleString();
 
-    // Lưu lại
-    localStorage.setItem("orders", JSON.stringify(orders));
+    document.getElementById("order-form").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-    // Hiện thông báo đặt hàng thành công
-    showToast("🎉 Đặt hàng thành công!");
+      let name = document.getElementById("customer-name").value.trim();
+      let phone = document.getElementById("customer-phone").value.trim();
+      let address = document.getElementById("customer-address").value.trim();
+      let payment = document.getElementById("customer-payment").value;
 
-    // Xóa giỏ hàng
-    localStorage.removeItem("cart");
+      if (!name || !phone || !address) {
+        showToast("❌ Vui lòng nhập đầy đủ thông tin!");
+        return;
+      }
 
-    setTimeout(() => {
-      window.location.href = "index.html"; // chuyển về trang chủ
-    }, 2000);
-  });
+      let order = {
+        id: Date.now(),
+        customer: { name, phone, address, payment },
+        items: cart,
+        total,
+        date: new Date().toLocaleString()
+      };
+
+      let orders = JSON.parse(localStorage.getItem("orders")) || [];
+      orders.push(order);
+      localStorage.setItem("orders", JSON.stringify(orders));
+
+      showToast("🎉 Đặt hàng thành công!");
+
+      localStorage.removeItem("cart");
+
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 2000);
+    });
+  }
+
+  updateCartUI();
 });
 
-// Hàm hiển thị toast
+// ---------------- TOAST ----------------
 function showToast(message) {
   let toast = document.getElementById("toast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "toast";
+    document.body.appendChild(toast);
+  }
   toast.textContent = message;
   toast.className = "show";
   setTimeout(() => {
