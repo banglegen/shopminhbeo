@@ -21,16 +21,16 @@
 
   <form id="order-form">
     <label>Họ và tên</label>
-    <input id="customer-name" type="text" placeholder="Nhập họ tên" required>
+    <input type="text" placeholder="Nhập họ tên" required>
 
     <label>Số điện thoại</label>
-    <input id="customer-phone" type="tel" placeholder="Nhập số điện thoại" required>
+    <input type="tel" placeholder="Nhập số điện thoại" required>
 
     <label>Địa chỉ giao hàng</label>
-    <textarea id="customer-address" placeholder="Nhập địa chỉ đầy đủ" required></textarea>
+    <textarea placeholder="Nhập địa chỉ đầy đủ" required></textarea>
 
     <label>Phương thức thanh toán</label>
-    <select id="customer-payment">
+    <select>
       <option>Thanh toán khi nhận hàng (COD)</option>
       <option>Chuyển khoản ngân hàng</option>
       <option>Ví điện tử (Momo, ZaloPay,...)</option>
@@ -40,8 +40,34 @@
   </form>
 </div>
 
-<!-- Toast thông báo -->
-<div id="toast"></div>
+<div id="toast">Đặt hàng thành công 🎉</div>
+
+<script>
+  
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let list = document.getElementById("order-list");
+  let total = cart.reduce((sum, p) => sum + p.price * p.quantity, 0);
+  list.innerHTML = cart.map(p => 
+    `<li><span>${p.name} x ${p.quantity}</span><span>${(p.price * p.quantity).toLocaleString()} đ</span></li>`
+  ).join("");
+  document.getElementById("order-total").textContent = total.toLocaleString();
+
+  document.getElementById("order-form").addEventListener("submit", function(e){
+    e.preventDefault(); 
+    showToast("Đặt hàng thành công 🎉");
+    localStorage.removeItem("cart"); 
+  });
+
+  function showToast(msg) {
+    let toast = document.getElementById("toast");
+    toast.textContent = msg;
+    toast.className = "show";
+    setTimeout(() => {
+      toast.className = toast.className.replace("show", "");
+    }, 3000); 
+  }
+</script>
+
 
 </body>
 </html>
