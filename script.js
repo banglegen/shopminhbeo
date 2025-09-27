@@ -27,14 +27,28 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Lưu thông tin đơn hàng (nếu cần)
-    // ...
+    // Tạo đối tượng đơn hàng
+    let order = {
+      id: Date.now(), // ID duy nhất
+      customer: { name, phone, address, payment },
+      items: cart,
+      total,
+      date: new Date().toLocaleString()
+    };
+
+    // Lấy danh sách đơn hàng cũ từ localStorage
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+    orders.push(order);
+
+    // Lưu lại
+    localStorage.setItem("orders", JSON.stringify(orders));
 
     // Hiện thông báo đặt hàng thành công
     showToast("🎉 Đặt hàng thành công!");
 
     // Xóa giỏ hàng
     localStorage.removeItem("cart");
+
     setTimeout(() => {
       window.location.href = "index.html"; // chuyển về trang chủ
     }, 2000);
